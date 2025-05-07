@@ -9,6 +9,13 @@ An arduino based shot timer for the Lelit Mara X prosumer espressor machine.
 
 # Power supply
 
+## Pins
+
+* 0 - VCC (12V)
+* 1 - GND
+* 3 - Receive (RX)
+* 4 - Transmit (TX)
+
 ## USB
 
 ## 9V block battery
