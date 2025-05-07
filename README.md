@@ -1,6 +1,12 @@
 # Mara X Shot Timer
 An arduino based shot timer for the Lelit Mara X prosumer espressor machine. 
 
+## Existing projects
+
+1. https://github.com/SaibotFlow/marax-monitor
+    1. (Fork) https://github.com/DiSanzes/Mara-X2-ShotTimer
+        1. (Fork) https://github.com/snafuz/MaraXDisplay
+
 # Materials
 
 * Board
@@ -11,8 +17,8 @@ An arduino based shot timer for the Lelit Mara X prosumer espressor machine.
 
 ## Pins
 
-* 0 - VCC (12V)
-* 1 - GND
+* 1 - VCC (12V)
+* 2 - GND
 * 3 - Receive (RX)
 * 4 - Transmit (TX)
 
