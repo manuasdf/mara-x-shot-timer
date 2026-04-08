@@ -3,9 +3,21 @@ An arduino based shot timer for the Lelit Mara X prosumer espressor machine.
 
 ## Existing projects
 
-1. https://github.com/SaibotFlow/marax-monitor
-    1. (Fork) https://github.com/DiSanzes/Mara-X2-ShotTimer
-        1. (Fork) https://github.com/snafuz/MaraXDisplay
+1. https://github.com/SaibotFlow/marax-monitor (The pictures about the wiring are very helpful)
+1. https://github.com/DiSanzes/Mara-X2-ShotTimer (forked the first)
+1. https://github.com/snafuz/MaraXDisplay (forked the second)
+      
+## Objective 1
+
+The project runs on most Arduino boards or ATmega chips. 
+
+Reasoning: Most existing projects use ESP32 or better with WiFi capabilities which none of the projects need nor use. ATmegas that support two serial I/Os at the same time, get the job done. 
+
+## Objective 2
+
+The project uses, only when necessary, currently maintained dependencies. 
+
+Reasoning: For the longest time, most of the listed projects were using a deprecated library. The aim is to handcode as much as possible to make the project run on smaller hardware as well. Without any dependencies will most likely not be possible since libraries for the display and the software serial are needed. 
 
 # Materials
 
@@ -21,6 +33,8 @@ An arduino based shot timer for the Lelit Mara X prosumer espressor machine.
 * 2 - GND
 * 3 - Receive (RX)
 * 4 - Transmit (TX)
+
+Note: I must make a huge mistage there. The 12V drops to 1.7V or less when connected with a buck converter, but before the converter. If anyone has a datasheet of the pins from the Mara X board, I'd be extremly thankful. 
 
 ## USB
 
