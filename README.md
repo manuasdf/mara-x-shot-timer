@@ -24,49 +24,8 @@ Reasoning: For the longest time, most of the listed projects were using a deprec
 Adafruit SSD1306 for the display: https://github.com/adafruit/Adafruit_SSD1306  
 Comptaible with most ATmega and ESP* but not ATtiny85.
 
-# Materials
+## Hardware
 
-* Board
-* Display
-* Voltage regulator
-
-# Power supply
-
-## Pins
-
-* 1 - VCC (12V)
-* 2 - GND
-* 3 - Receive (RX)
-* 4 - Transmit (TX)
-
-Note: I must make a huge mistage there. The 12V drops to 1.7V or less when connected with a buck converter, but before the converter. If anyone has a datasheet of the pins from the Mara X board, I'd be extremly thankful. 
-
-## USB
-
-## 9V block battery
-
-### Switch
-
-### Button
-
-Power on
-opener Transistor is letting energy flow
-define output pin digital
-after 120 000 seconds
-signal 1 on output pin
-power off
-
-Circuit
-
-https://forum.arduino.cc/t/vorstellung-und-erste-fragen-zur-selbstabschaltung-transistorschaltung/362576/16
-
-## From Mara X with voltage regulator
-
-### Circuit
-
-https://www.circuits-diy.com/12v-to-9v-converter-circuit-using-lm7809-regulator-ic/
-
-### Buy
-
-https://www.ebay.de/itm/375340664282
-
+For this project I used:
+* Ardunio Nano
+* Monochrome OLEDs display based on SSD1306 driver, 128 x 32 pixel, using I2C for communication
