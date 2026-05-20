@@ -28,54 +28,12 @@ int currentBoilerTemperature = 0;
 int currentSteamTemperature = 0;
 int targetSteamTemperature = 0;
 int pumpState = 0;
-char mode = "";
+char mode = NULL;
 String version;
 
 //Instances
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 SoftwareSerial MaraXSerial(RX, TX);
-
-void setup()
-{
-  display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS);
-  display.clearDisplay();
-  display.display();
-  Serial.begin(9600);
-  MaraXSerial.begin(9600);
-  memset(buffer, 0, BUFFER_SIZE);
-  delay(500);
-  infoScreen();
-}
-
-void infoScreen() 
-{
-  readState();
-
-  display.clearDisplay();
-
-  display.setTextColor(SSD1306_WHITE);
-  display.setTextSize(1);
-
-  display.setCursor(0,0);
-  if (mode == 43) { // "+"
-    display.print(F("COFFEE MODE"));
-  } else if (mode == 67) { // "C"
-    display.print(F("STEAM MODE"));
-  } else {
-    display.print(F("NO MODE"));
-  }
-
-  display.setCursor(100,0);
-  display.print(version);
-
-  display.setCursor(0,16);
-  display.print(targetSteamTemperature);
-  display.print(F(" STEAM TARGET TEMP"));
-
-  display.display();
-
-  delay(5000);
-}
 
 void readState()
 {
@@ -117,34 +75,72 @@ void readState()
   }
 
   // Store values
-  mode = maraData[0].charAt(0); // only first character
-  version = maraData[0].substring(1); // start from second character
-  currentSteamTemperature = maraData[1].toInt();
-  targetSteamTemperature = maraData[2].toInt();
-  currentBoilerTemperature = maraData[3].toInt();
-  pumpState = maraData[6].toInt();
+  mode = maraData[0].charAt(0) || NULL; // only first character
+  version = maraData[0].substring(1) || NULL; // start from second character
+  currentSteamTemperature = maraData[1].toInt() || 0;
+  targetSteamTemperature = maraData[2].toInt() || 0;
+  currentBoilerTemperature = maraData[3].toInt() || 0;
+  pumpState = maraData[6].toInt() || 0;
+}
+
+void drawInfoScreen() 
+{
+  display.clearDisplay();
+
+  display.setTextColor(SSD1306_WHITE);
+  display.setTextSize(1);
+
+  display.setCursor(0,0);
+  if (mode == 43) { // "+"
+    display.print(F("COFFEE MODE"));
+  } else if (mode == 67) { // "C"
+    display.print(F("STEAM MODE"));
+  } else {
+    display.print(F("NO MODE"));
+  }
+
+  display.setCursor(100,0);
+  display.print(version);
+
+  display.setCursor(0,16);
+  display.print(targetSteamTemperature);
+  display.print(F(" STEAM TARGET TEMP"));
+
+  display.display();
+
+  delay(5000);
+}
+
+void setup()
+{
+  display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS);
+  display.clearDisplay();
+  display.display();
+  Serial.begin(9600);
+  MaraXSerial.begin(9600);
+  memset(buffer, 0, BUFFER_SIZE);
+  delay(1000);
+  readState();
+  drawInfoScreen();
 }
 
 void updateView()
 {
-
   display.clearDisplay();
 
-  display.setTextSize(2);
+  display.setTextSize(2); // Draw 2X-scale text
   display.setTextColor(SSD1306_WHITE); // Draw white text
   display.setCursor(String(currentBoilerTemperature).length() == 3 ? 0 : 12,0);
   display.println(currentBoilerTemperature);
 
-  display.setTextSize(2); // Draw 2X-scale text
+  display.setTextSize(2);
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(String(currentSteamTemperature).length() == 3 ? 0 : 12,16);
   display.println(currentSteamTemperature); 
 
-  // display.setTextColor(SSD1306_BLACK,SSD1306_WHITE);
   display.setTextSize(3);
   display.setCursor(86,0);
   display.println(seconds);
-  // display.setTextColor(SSD1306_BLACK,SSD1306_WHITE);
   display.setTextSize(1);
   display.setCursor(86,24);
   display.println(String(lastTimer) + " SEC");
@@ -181,7 +177,9 @@ void loop()
       readState();
     }
 
-    lastTimer = seconds;
+    if(seconds > 9) {
+      lastTimer = seconds;
+    }
     seconds = 0;
   }
   
